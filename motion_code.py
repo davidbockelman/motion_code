@@ -66,17 +66,18 @@ class MotionCode:
         for RMSE errors.
 
     """
-    def __init__(self, m=10, Q=1, latent_dim=2, sigma_y=0.1):
+    def __init__(self, m=10, Q=1, latent_dim=2, sigma_y=0.1, R=3):
         self.m = m # Num inducing pts
         self.Q = Q # Num of kernel components
         self.latent_dim = latent_dim # Dim of motion code
         self.sigma_y = sigma_y # Noise of target
+        self.R = R # Number of global motion codes (experts)
 
     def fit(self, X_train, Y_train, labels_train, model_path):
         start_time = time.time()
         self.model_path = model_path
         optimize_motion_codes(X_train, Y_train, labels_train, model_path=model_path, 
-              m=self.m, Q=self.Q, latent_dim=self.latent_dim, sigma_y=self.sigma_y)
+              m=self.m, Q=self.Q, latent_dim=self.latent_dim, sigma_y=self.sigma_y, R=self.R)
         self.train_time = time.time() - start_time
 
     def load(self, model_path=''):
@@ -85,14 +86,27 @@ class MotionCode:
         params = np.load(model_path + '.npy', allow_pickle=True).item()
         self.X_m, self.Z, self.Sigma, self.W = params.get('X_m'), params.get('Z'), params.get('Sigma'), params.get('W') 
         self.mu_ms, self.A_ms, self.K_mm_invs = params.get('mu_ms'), params.get('A_ms'), params.get('K_mm_invs')
-        self.num_motion = self.Z.shape[0]
+        # R is stored in saved model, or use shape of Z to infer
+        if 'R' in params:
+            self.R = params.get('R')
+        else:
+            self.R = self.Z.shape[0]  # Infer from Z shape (backward compatibility)
+        # num_motion is based on number of processes (Sigma/W shape), not R
+        self.num_motion = self.Sigma.shape[0]
+        # Load expert weights if available, otherwise use uniform weights
+        if 'expert_weights' in params:
+            self.expert_weights = params.get('expert_weights')
+        else:
+            # Fallback to uniform weights (backward compatibility)
+            self.expert_weights = np.ones((self.num_motion, self.R)) / self.R
         self.kernel_params = []
         for k in range(self.num_motion):
             self.kernel_params.append((self.Sigma[k], self.W[k]))
 
     def classify_predict(self, X_test, Y_test):
         return classify_predict_helper(X_test, Y_test, self.kernel_params, 
-                                       self.X_m, self.Z, self.mu_ms, self.A_ms, self.K_mm_invs)
+                                       self.X_m, self.Z, self.mu_ms, self.A_ms, self.K_mm_invs, 
+                                       R=self.R, expert_weights=self.expert_weights)
     
     def classify_predict_on_batches(self, X_test_list, Y_test_list, true_labels):
         # Predict each trajectory/timeseries in the test dataset
@@ -118,8 +132,36 @@ class MotionCode:
     
     def forecast_predict(self, test_time_horizon, label):
         k = label
-        return q(test_time_horizon, sigmoid(self.X_m @ self.Z[k]), 
-                 self.kernel_params[k], self.mu_ms[k], self.A_ms[k], self.K_mm_invs[k])
+        # Use mixture of experts: compute predictions from all R experts and weight them using learned static weights
+        expert_predictions = []
+        
+        for r in range(self.R):
+            X_m_r = sigmoid(self.X_m @ self.Z[r])
+            if isinstance(self.mu_ms[k], list):
+                mean, covar = q(test_time_horizon, X_m_r, 
+                               self.kernel_params[k], self.mu_ms[k][r], self.A_ms[k][r], self.K_mm_invs[k][r])
+            else:
+                # Backward compatibility: single expert
+                mean, covar = q(test_time_horizon, X_m_r, 
+                               self.kernel_params[k], self.mu_ms[k], self.A_ms[k], self.K_mm_invs[k])
+            expert_predictions.append((mean, covar))
+        
+        # Use learned static weights for this class
+        if hasattr(self, 'expert_weights') and self.expert_weights is not None:
+            weights = self.expert_weights[k]  # Shape (R,)
+        else:
+            # Fallback to uniform weights if not available (backward compatibility)
+            weights = np.ones(self.R) / self.R
+        
+        # Weight and combine predictions
+        weighted_mean = np.zeros_like(expert_predictions[0][0])
+        weighted_covar = np.zeros_like(expert_predictions[0][1])
+        
+        for r, (mean, covar) in enumerate(expert_predictions):
+            weighted_mean += weights[r] * mean
+            weighted_covar += weights[r] * covar
+        
+        return weighted_mean, weighted_covar
     
     def forecast_predict_on_batches(self, test_time_horizon, Y_test_list, labels):
         # Average prediction for each type of motion.

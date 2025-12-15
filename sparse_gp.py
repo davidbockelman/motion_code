@@ -62,21 +62,24 @@ def unpack_params_single(params, dims):
 
 def unpack_params(params, dims):
     '''
-    Returns unpacked X_m, Z, Sigma, W
+    Returns unpacked X_m, Z, Sigma, W, expert_weights
     X_m is a pack of inducing point with shape (m, latent_dim)
-    Z is all motion codes stacking together with shape (num_motion, latent_dim)
-    (Sigma, W) are kernel params of all motions, each has shape (num_motion, Q)    
+    Z is all global motion codes stacking together with shape (R, latent_dim)
+    (Sigma, W) are kernel params of all motions, each has shape (num_motion, Q)
+    expert_weights are learned weights for each class-expert combination, shape (num_motion, R)
     '''
-    num_motion, m, latent_dim, Q = dims
+    num_motion, R, m, latent_dim, Q = dims
     cnt = 0
     X_m = params[cnt:cnt+m*latent_dim]; cnt += m*latent_dim
-    Z = params[cnt:cnt+num_motion*latent_dim]; cnt += num_motion*latent_dim
+    Z = params[cnt:cnt+R*latent_dim]; cnt += R*latent_dim
     Sigma = params[cnt:cnt+num_motion*Q]; cnt += num_motion*Q
     Sigma = Sigma.reshape(num_motion, Q)
     W = params[cnt:cnt+num_motion*Q]; cnt += num_motion*Q
     W = W.reshape(num_motion, Q)
+    expert_weights = params[cnt:cnt+num_motion*R]; cnt += num_motion*R
+    expert_weights = expert_weights.reshape(num_motion, R)
   
-    return jnp.array(X_m).reshape(m, latent_dim), Z.reshape(num_motion, latent_dim), Sigma, W
+    return jnp.array(X_m).reshape(m, latent_dim), Z.reshape(R, latent_dim), Sigma, W, expert_weights
 
 ## ELBO functions ##
 def elbo_fn_from_kernel(K_mm, K_mn, y, trace_avg_all_comps, sigma_y):
@@ -137,6 +140,7 @@ def elbo_fn_single(X, Y, sigma_y, dims):
 def elbo_fn(X_list, Y_list, labels, sigma_y, dims):
     """
     Returns ELBO function from a list of timeseries with each timeseries is a specific motion.
+    Uses mixture of experts with R global motion codes.
     
     Parameters
     ----------
@@ -145,27 +149,44 @@ def elbo_fn(X_list, Y_list, labels, sigma_y, dims):
     Here n is the number of data points in a particular timeseries.
     labels: map each timeseries to the motion (number) it represents.
     sigma_y: Target noise.
-    dims: tuple of (num_motion,  m=num_inducing_pts, latent_dim, Q). Recall Q is the number of terms in kernel.
+    dims: tuple of (num_motion, R, m=num_inducing_pts, latent_dim, Q). 
+          R is the number of global motion codes (experts).
+          Q is the number of terms in kernel.
     """
 
     def elbo(params):
         # X_m is a pack of inducing point with shape (m, latent_dim)
-        # Z is all motion codes stacking together with shape (num_motion, latent_dim)
-        # Currently, each motion has a separate set of params (sigma, mu, w, phi, theta)
-        # They are stacked in (Sigma, W), with each has shape (num_motion, num_comp, Q)
-        X_m, Z, Sigma, W = unpack_params(params, dims)
+        # Z is all global motion codes stacking together with shape (R, latent_dim)
+        # Each motion has a separate set of kernel params (Sigma, W), with each has shape (num_motion, Q)
+        # expert_weights are learned weights for each class-expert combination, shape (num_motion, R)
+        num_motion, R, m, latent_dim, Q = dims
+        X_m, Z, Sigma, W, expert_weights_logits = unpack_params(params, dims)
         Sigma = softplus(Sigma)
         W = softplus(W)
+        # Apply softmax per class to ensure weights sum to 1 for each class
+        expert_weights = jnp.array([softmax(expert_weights_logits[k]) for k in range(num_motion)])
 
         loss = 0
         for i in range(len(X_list)):
             k = labels[i]  # label of the current timeseries
-            X_m_k = sigmoid(X_m@Z[k])
-            K_mm = spectral_kernel(X_m_k, X_m_k, Sigma[k], W[k]) + jitter(X_m_k.shape[0])
-            K_mn = spectral_kernel(X_m_k, X_list[i], Sigma[k], W[k])
-            trace_avg_all_comps = jnp.sum(W[k]**2)
             y_n_k = Y_list[i].reshape(-1, 1) # shape (n, 1)
-            loss += elbo_fn_from_kernel(K_mm, K_mn, y_n_k, trace_avg_all_comps, sigma_y)
+            
+            # Compute losses for all R experts
+            expert_losses = []
+            for r in range(R):
+                X_m_r = sigmoid(X_m @ Z[r])
+                K_mm = spectral_kernel(X_m_r, X_m_r, Sigma[k], W[k]) + jitter(X_m_r.shape[0])
+                K_mn = spectral_kernel(X_m_r, X_list[i], Sigma[k], W[k])
+                trace_avg_all_comps = jnp.sum(W[k]**2)
+                expert_loss = elbo_fn_from_kernel(K_mm, K_mn, y_n_k, trace_avg_all_comps, sigma_y)
+                expert_losses.append(expert_loss)
+            
+            # Use learned static weights for this class
+            expert_losses = jnp.array(expert_losses)
+            weights = expert_weights[k]  # Shape (R,)
+            # Compute weighted loss using learned weights
+            weighted_loss = jnp.sum(weights * expert_losses)
+            loss += weighted_loss
         
         return loss/len(X_list)
 
