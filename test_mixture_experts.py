@@ -2,21 +2,33 @@
 Test script for mixture of experts motion code on sktime datasets.
 """
 import numpy as np
-from data_processing import get_train_test_data_classify, get_train_test_data_forecast
+import os
+import json
+import argparse
+from data_processing import get_train_test_data_forecast, process_data_for_motion_codes
 from motion_code import MotionCode
 
-def test_classification(dataset_name='ItalyPowerDemand', R=3):
+def test_classification(dataset_name='ItalyPowerDemand', m=5, R=3):
     """Test classification with mixture of experts."""
     print(f"\n{'='*60}")
-    print(f"Testing Classification on {dataset_name} with R={R}")
+    print(f"Testing Classification on {dataset_name} with m={m}, R={R}")
     print(f"{'='*60}\n")
     
-    # Load data
-    print("Loading data...")
-    benchmark_data, motion_code_data = get_train_test_data_classify(
-        dataset_name, load_existing_data=False, add_noise=True
-    )
-    X_train, Y_train, labels_train, X_test, Y_test, labels_test = motion_code_data
+    # Load data from saved .npy file
+    print("Loading data from saved file...")
+    data_path = f'data/{dataset_name}.npy'
+    if not os.path.exists(data_path):
+        raise FileNotFoundError(f"Data file not found: {data_path}. Please run add_noise_and_save_data.py first.")
+    
+    data = np.load(data_path, allow_pickle=True).item()
+    Y_train_bm = data['Y_train']
+    labels_train_bm = data['labels_train']
+    Y_test_bm = data['Y_test']
+    labels_test_bm = data['labels_test']
+    
+    # Process data for motion codes
+    X_train, Y_train, labels_train = process_data_for_motion_codes(Y_train_bm, labels_train_bm)
+    X_test, Y_test, labels_test = process_data_for_motion_codes(Y_test_bm, labels_test_bm)
     
     # Convert to lists if needed
     if not isinstance(X_train, list):
@@ -31,10 +43,10 @@ def test_classification(dataset_name='ItalyPowerDemand', R=3):
     
     # Initialize and train model
     print("\nInitializing model...")
-    model = MotionCode(m=10, Q=1, latent_dim=2, sigma_y=0.1, R=R)
+    model = MotionCode(m=m, Q=1, latent_dim=2, sigma_y=0.1, R=R)
     
     print("Training model...")
-    model_path = f'saved_models/test_{dataset_name}_R{R}_classify'
+    model_path = f'saved_models/test_{dataset_name}_m{m}_R{R}_classify'
     model.fit(X_train, Y_train, labels_train, model_path)
     print(f"Training completed in {model.train_time:.2f} seconds")
     
@@ -68,12 +80,12 @@ def test_classification(dataset_name='ItalyPowerDemand', R=3):
     accuracy = model.classify_predict_on_batches(X_test, Y_test, labels_test)
     print(f"Classification Accuracy: {accuracy:.4f}")
     
-    return accuracy
+    return accuracy, model.train_time
 
-def test_forecasting(dataset_name='ItalyPowerDemand', R=3):
+def test_forecasting(dataset_name='ItalyPowerDemand', m=10, R=3):
     """Test forecasting with mixture of experts."""
     print(f"\n{'='*60}")
-    print(f"Testing Forecasting on {dataset_name} with R={R}")
+    print(f"Testing Forecasting on {dataset_name} with m={m}, R={R}")
     print(f"{'='*60}\n")
     
     # Load data
@@ -93,10 +105,10 @@ def test_forecasting(dataset_name='ItalyPowerDemand', R=3):
     
     # Initialize and train model
     print("\nInitializing model...")
-    model = MotionCode(m=10, Q=1, latent_dim=2, sigma_y=0.1, R=R)
+    model = MotionCode(m=m, Q=1, latent_dim=2, sigma_y=0.1, R=R)
     
     print("Training model...")
-    model_path = f'saved_models/test_{dataset_name}_R{R}_forecast'
+    model_path = f'saved_models/test_{dataset_name}_m{m}_R{R}_forecast'
     model.fit(X_train, Y_train, labels, model_path)
     print(f"Training completed in {model.train_time:.2f} seconds")
     
@@ -133,26 +145,68 @@ def test_forecasting(dataset_name='ItalyPowerDemand', R=3):
         print(f"  Class {k}: {err:.4f}")
     print(f"Average RMSE: {np.mean(errors):.4f}")
     
-    return errors
+    return errors, model.train_time
+
+def save_results_to_json(results, json_file):
+    """Append results as a JSON object to a JSON file (one JSON object per line)."""
+    os.makedirs(os.path.dirname(json_file) if os.path.dirname(json_file) else '.', exist_ok=True)
+    
+    # Append to file (one JSON object per line)
+    with open(json_file, 'a') as f:
+        json.dump(results, f)
+        f.write('\n')
 
 if __name__ == '__main__':
-    # Test with different R values
-    R_values = [2]
-    dataset = 'Lightning7'
+    parser = argparse.ArgumentParser(description='Test mixture of experts motion code')
+    parser.add_argument('--dataset', type=str, default='Lightning7', help='Dataset name')
+    parser.add_argument('--m', type=int, default=5, help='Number of inducing points')
+    parser.add_argument('--R', type=int, default=3, help='Number of experts')
+    parser.add_argument('--json-file', type=str, default='results.json', help='JSON file to append results to')
+    parser.add_argument('--run-forecasting', action='store_true', help='Also run forecasting tests')
+    
+    args = parser.parse_args()
     
     print("="*60)
     print("Mixture of Experts Motion Code Test")
     print("="*60)
+    print(f"Dataset: {args.dataset}, m={args.m}, R={args.R}")
+    print("="*60)
     
-    for R in R_values:
-        try:
-            print(f"\n\nTesting with R={R}")
-            acc = test_classification(dataset, R=R)
-            # errors = test_forecasting(dataset, R=R)
-        except Exception as e:
-            print(f"Error with R={R}: {e}")
-            import traceback
-            traceback.print_exc()
+    results = {
+        'dataset_name': args.dataset,
+        'm': args.m,
+        'R': args.R,
+        'classification_accuracy': None,
+        'forecasting_metrics': None,
+        'train_time': None
+    }
+    
+    try:
+        # Run classification
+        print(f"\n\nTesting classification with m={args.m}, R={args.R}")
+        accuracy, train_time = test_classification(args.dataset, m=args.m, R=args.R)
+        results['classification_accuracy'] = float(accuracy)
+        results['train_time'] = float(train_time)
+        
+        # Run forecasting if requested
+        print(f"\n\nTesting forecasting with m={args.m}, R={args.R}")
+        errors, forecast_train_time = test_forecasting(args.dataset, m=args.m, R=args.R)
+        results['forecasting_metrics'] = {
+            'rmse_per_class': [float(err) for err in errors],
+            'average_rmse': float(np.mean(errors)),
+            'train_time': float(forecast_train_time)
+        }
+        
+        # Save results to JSON file
+        save_results_to_json(results, args.json_file)
+        print(f"\nResults saved to {args.json_file}")
+        
+    except Exception as e:
+        print(f"Error: {e}")
+        import traceback
+        traceback.print_exc()
+        results['error'] = str(e)
+        save_results_to_json(results, args.json_file)
     
     print("\n" + "="*60)
     print("Test completed!")

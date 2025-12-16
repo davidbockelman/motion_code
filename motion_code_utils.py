@@ -26,10 +26,37 @@ def optimize_motion_codes(X_list, Y_list, labels, model_path, m=10, Q=8, latent_
     # Initialize expert weights logits (before softmax) - start with uniform weights
     expert_weights_logits_start = np.zeros((num_motion, R))  # Uniform after softmax
 
+    # Create ELBO function for optimization
+    elbo_func = elbo_fn(X_list, Y_list, labels, sigma_y, dims)
+    x0 = pack_params([X_m_start, Z_start, Sigma_start, W_start, expert_weights_logits_start])
+    
+    # Callback to print progress during optimization
+    iteration = [0]  # Use list to allow modification in nested function
+    best_loss = [float('inf')]
+    
+    def callback(xk):
+        """Callback function to print optimization progress."""
+        iteration[0] += 1
+        # Evaluate loss at current parameters
+        current_loss, _ = elbo_func(xk)
+        best_loss[0] = min(best_loss[0], current_loss)
+        
+        # Print progress every iteration (or you could print every N iterations)
+        if iteration[0] == 1:
+            print(f"\nOptimization progress:")
+            print(f"{'Iter':<6} {'Loss':<12} {'Best Loss':<12}")
+            print("-" * 32)
+        print(f"{iteration[0]:<6} {current_loss:<12.6f} {best_loss[0]:<12.6f}")
+    
     # Optimize X_m, Z, kernel parameters (Sigma, W), and expert weights
-    res = minimize(fun=elbo_fn(X_list, Y_list, labels, sigma_y, dims),
-        x0 = pack_params([X_m_start, Z_start, Sigma_start, W_start, expert_weights_logits_start]),
-        method='L-BFGS-B', jac=True)
+    print("Starting optimization...")
+    res = minimize(fun=elbo_func,
+        x0=x0,
+        method='L-BFGS-B', 
+        jac=True,
+        callback=callback)
+    print(f"\nOptimization completed after {iteration[0]} iterations")
+    print(f"Final loss: {res.fun:.6f}")
     X_m, Z, Sigma, W, expert_weights_logits = unpack_params(res.x, dims=dims)
     Sigma = softplus(Sigma)
     W = softplus(W)
