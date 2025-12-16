@@ -144,7 +144,7 @@ def main():
     
     # Generate dataset
     Y_train, labels_train, Y_test, labels_test = generate_synthetic_dataset(
-        num_train=60,   # 20 per class
+        num_train=120,   # 20 per class
         num_test=60,    # 20 per class
         num_timestamps=150,
         noise_sigma=0.1,

@@ -66,18 +66,21 @@ class MotionCode:
         for RMSE errors.
 
     """
-    def __init__(self, m=10, Q=1, latent_dim=2, sigma_y=0.1, R=3):
+    def __init__(self, m=10, Q=1, latent_dim=2, sigma_y=0.1, R=3, lambda_reg=0.0, lambda_weight_reg=0.0):
         self.m = m # Num inducing pts
         self.Q = Q # Num of kernel components
         self.latent_dim = latent_dim # Dim of motion code
         self.sigma_y = sigma_y # Noise of target
         self.R = R # Number of global motion codes (experts)
+        self.lambda_reg = lambda_reg # L2 regularization coefficient for global motion codes Z
+        self.lambda_weight_reg = lambda_weight_reg # Regularization coefficient for pairwise cosine similarity between expert weight vectors
 
     def fit(self, X_train, Y_train, labels_train, model_path):
         start_time = time.time()
         self.model_path = model_path
         optimize_motion_codes(X_train, Y_train, labels_train, model_path=model_path, 
-              m=self.m, Q=self.Q, latent_dim=self.latent_dim, sigma_y=self.sigma_y, R=self.R)
+              m=self.m, Q=self.Q, latent_dim=self.latent_dim, sigma_y=self.sigma_y, R=self.R, 
+              lambda_reg=self.lambda_reg, lambda_weight_reg=self.lambda_weight_reg)
         self.train_time = time.time() - start_time
 
     def load(self, model_path=''):

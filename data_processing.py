@@ -79,6 +79,16 @@ def load_data(name, split='train', add_noise=False):
     '''
     if name == 'Pronunciation Audio':
         Y, labels = generate_data_from_sound_dataset(input_dir='data/audio')
+    elif name == 'Synthetic3Class':
+        # Load synthetic dataset from .npy file
+        data_path = 'data/Synthetic3Class.npy'
+        if not os.path.exists(data_path):
+            raise FileNotFoundError(f"Data file not found: {data_path}. Please run create_synthetic_dataset.py first.")
+        data = np.load(data_path, allow_pickle=True).item()
+        if split == 'train':
+            Y, labels = data['Y_train'], data['labels_train']
+        else:  # split == 'test'
+            Y, labels = data['Y_test'], data['labels_test']
     else:
         Y, labels= load_UCR_UEA_dataset(name=name, split=split, return_X_y=True, return_type="numpy3d")
     if add_noise:
@@ -135,7 +145,14 @@ def split_train_test_forecasting(Y, percentage):
 
 ################################ Single convenient fcts to get data for all algorithms ################################
 def get_train_test_data_forecast(name):
-    Y, labels = load_data(name, split='train')
+    # For Synthetic3Class, combine train and test data since forecasting splits temporally
+    if name == 'Synthetic3Class':
+        Y_train_data, labels_train = load_data(name, split='train')
+        Y_test_data, labels_test = load_data(name, split='test')
+        Y = np.concatenate([Y_train_data, Y_test_data], axis=0)
+        labels = np.concatenate([labels_train, labels_test], axis=0)
+    else:
+        Y, labels = load_data(name, split='train')
     Y, labels = process_data(Y, labels)
     Y_train, Y_test, train_num_steps, test_num_steps = (
         split_train_test_forecasting(Y, percentage=0.8)
@@ -153,9 +170,12 @@ def get_train_test_data_forecast(name):
 def get_train_test_data_classify(name, load_existing_data, add_noise=True):
     benchmark_data, motion_code_data = None, None
     if name != 'PD setting 1' and name != 'PD setting 2':
-        data_path = 'data/basics/' + name
-        if name == 'Pronunciation Audio':
+        if name == 'Synthetic3Class':
+            data_path = 'data/Synthetic3Class'
+        elif name == 'Pronunciation Audio':
             data_path = 'data/audio/' + name
+        else:
+            data_path = 'data/basics/' + name
         if load_existing_data:
             data = np.load(data_path + '.npy', allow_pickle=True).item()
             Y_train_bm, labels_train_bm = data.get('Y_train'), data.get('labels_train')

@@ -137,7 +137,7 @@ def elbo_fn_single(X, Y, sigma_y, dims):
 
     return elbo_grad_wrapper
 
-def elbo_fn(X_list, Y_list, labels, sigma_y, dims):
+def elbo_fn(X_list, Y_list, labels, sigma_y, dims, lambda_reg=0.0, lambda_weight_reg=0.0):
     """
     Returns ELBO function from a list of timeseries with each timeseries is a specific motion.
     Uses mixture of experts with R global motion codes.
@@ -152,6 +152,11 @@ def elbo_fn(X_list, Y_list, labels, sigma_y, dims):
     dims: tuple of (num_motion, R, m=num_inducing_pts, latent_dim, Q). 
           R is the number of global motion codes (experts).
           Q is the number of terms in kernel.
+    lambda_reg: float, default=0.0
+        L2 regularization coefficient for global motion codes Z.
+    lambda_weight_reg: float, default=0.0
+        Regularization coefficient for pairwise cosine similarity between expert weight vectors.
+        Minimizing cosine similarity pushes class weight distributions apart.
     """
 
     def elbo(params):
@@ -188,7 +193,21 @@ def elbo_fn(X_list, Y_list, labels, sigma_y, dims):
             weighted_loss = jnp.sum(weights * expert_losses)
             loss += weighted_loss
         
-        return loss/len(X_list)
+        # Add L2 regularization on global motion codes Z
+        reg_term_z = lambda_reg * jnp.sum(Z**2)
+        
+        # Add pairwise cosine similarity on expert weights to push class weight distributions apart
+        # Normalize expert weights to unit length for proper cosine similarity
+        expert_weights_norm = expert_weights / (jnp.linalg.norm(expert_weights, axis=1, keepdims=True) + 1e-8)
+        # Compute pairwise cosine similarities (for normalized vectors, dot product = cosine similarity)
+        weight_cosine_similarities = expert_weights_norm @ expert_weights_norm.T  # Shape (num_motion, num_motion)
+        # Create upper triangular mask (excluding diagonal) to get unique pairs
+        weight_mask = jnp.triu(jnp.ones((num_motion, num_motion)), k=1)  # k=1 excludes diagonal
+        pairwise_weight_sims = weight_cosine_similarities * weight_mask
+        # Sum of pairwise cosine similarities (minimizing this pushes class weights apart)
+        reg_term_weights = lambda_weight_reg * jnp.sum(pairwise_weight_sims)
+        
+        return loss/len(X_list) + reg_term_z + reg_term_weights
 
     elbo_grad = jit(value_and_grad(elbo))
 

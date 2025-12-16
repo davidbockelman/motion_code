@@ -5,7 +5,7 @@ from scipy.optimize import minimize
 from sparse_gp import *
 from utils import *
 
-def optimize_motion_codes(X_list, Y_list, labels, model_path, m=10, Q=8, latent_dim=3, sigma_y=0.1, R=3):
+def optimize_motion_codes(X_list, Y_list, labels, model_path, m=10, Q=8, latent_dim=3, sigma_y=0.1, R=3, lambda_reg=0.0, lambda_weight_reg=0.0):
     '''
     Main algorithm to optimize all variables for the Motion Code model with mixture of experts.
     
@@ -13,13 +13,18 @@ def optimize_motion_codes(X_list, Y_list, labels, model_path, m=10, Q=8, latent_
     ----------
     R: int
         Number of global motion codes (experts)
+    lambda_reg: float, default=0.0
+        L2 regularization coefficient for global motion codes Z.
+    lambda_weight_reg: float, default=0.0
+        Regularization coefficient for pairwise cosine similarity between expert weight vectors.
+        Minimizing cosine similarity pushes class weight distributions apart.
     '''
     num_motion = np.unique(labels).shape[0]
     dims = (num_motion, R, m, latent_dim, Q)
 
     # Initialize parameters
     X_m_start = np.repeat(sigmoid_inv(np.linspace(0.1, 0.9, m)).reshape(1, -1), latent_dim, axis=0).swapaxes(0, 1)
-    # Initialize expert codes with random values so they start different
+    # Initialize expert codes with random values
     Z_start = np.random.randn(R, latent_dim) * 0.1  # R global motion codes with small random initialization
     Sigma_start = softplus_inv(np.ones((num_motion, Q)))
     W_start = softplus_inv(np.ones((num_motion, Q)))
@@ -27,7 +32,7 @@ def optimize_motion_codes(X_list, Y_list, labels, model_path, m=10, Q=8, latent_
     expert_weights_logits_start = np.zeros((num_motion, R))  # Uniform after softmax
 
     # Create ELBO function for optimization
-    elbo_func = elbo_fn(X_list, Y_list, labels, sigma_y, dims)
+    elbo_func = elbo_fn(X_list, Y_list, labels, sigma_y, dims, lambda_reg=lambda_reg, lambda_weight_reg=lambda_weight_reg)
     x0 = pack_params([X_m_start, Z_start, Sigma_start, W_start, expert_weights_logits_start])
     
     # Callback to print progress during optimization

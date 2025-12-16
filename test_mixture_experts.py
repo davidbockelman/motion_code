@@ -43,7 +43,7 @@ def test_classification(dataset_name='ItalyPowerDemand', m=5, R=3):
     
     # Initialize and train model
     print("\nInitializing model...")
-    model = MotionCode(m=m, Q=1, latent_dim=2, sigma_y=0.1, R=R)
+    model = MotionCode(m=m, Q=1, latent_dim=2, sigma_y=0.1, R=R, lambda_reg=1.0, lambda_weight_reg=0.0)
     
     print("Training model...")
     model_path = f'saved_models/test_{dataset_name}_m{m}_R{R}_classify'
