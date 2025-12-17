@@ -1,12 +1,182 @@
-{"dataset_name": "Chinatown", "m": 5, "R": 2, "classification_accuracy": 0.6472303206997084, "forecasting_metrics": {"rmse_per_class": [2736.1272325730797, 3132.1614926555258], "average_rmse": 2934.1443626143027, "train_time": 7.8287413120269775}, "train_time": 6.950432062149048}
-{"dataset_name": "Chinatown", "m": 5, "R": 2, "classification_accuracy": 0.6938775510204082, "forecasting_metrics": {"rmse_per_class": [630.8180979844939, 1379.4247353631602], "average_rmse": 1005.1214166738271, "train_time": 6.5324461460113525}, "train_time": 7.618917942047119}
-{"dataset_name": "Chinatown", "m": 5, "R": 2, "classification_accuracy": 0.6880466472303207, "forecasting_metrics": {"rmse_per_class": [352.7392972103168, 325.57742199164926], "average_rmse": 339.15835960098303, "train_time": 7.019761800765991}, "train_time": 12.447906732559204}
-{"dataset_name": "Chinatown", "m": 5, "R": 3, "classification_accuracy": 0.6997084548104956, "forecasting_metrics": {"rmse_per_class": [360.19265908515234, 2921.557588259132], "average_rmse": 1640.875123672142, "train_time": 16.214635610580444}, "train_time": 14.333276510238647}
-{"dataset_name": "Chinatown", "m": 5, "R": 3, "classification_accuracy": 0.6763848396501457, "forecasting_metrics": {"rmse_per_class": [2116.500288427338, 2653.572892293401], "average_rmse": 2385.0365903603697, "train_time": 14.039886474609375}, "train_time": 14.658300161361694}
-{"dataset_name": "Chinatown", "m": 5, "R": 3, "classification_accuracy": 0.7084548104956269, "forecasting_metrics": {"rmse_per_class": [2673.8947232119417, 2784.7462499277253], "average_rmse": 2729.3204865698335, "train_time": 17.20240068435669}, "train_time": 19.304592609405518}
-{"dataset_name": "Chinatown", "m": 10, "R": 2, "classification_accuracy": 0.6705539358600583, "forecasting_metrics": {"rmse_per_class": [347.27961415842015, 352.9621247841052], "average_rmse": 350.12086947126267, "train_time": 9.145734071731567}, "train_time": 9.95226788520813}
-{"dataset_name": "Chinatown", "m": 10, "R": 2, "classification_accuracy": 0.6938775510204082, "forecasting_metrics": {"rmse_per_class": [545.593027920479, 472.20820189836587], "average_rmse": 508.9006149094224, "train_time": 10.970177173614502}, "train_time": 9.212565898895264}
-{"dataset_name": "Chinatown", "m": 10, "R": 2, "classification_accuracy": 0.6822157434402333, "forecasting_metrics": {"rmse_per_class": [472.01223283106884, 429.7748516913269], "average_rmse": 450.89354226119787, "train_time": 10.968600988388062}, "train_time": 7.947273015975952}
-{"dataset_name": "Chinatown", "m": 10, "R": 3, "classification_accuracy": 0.6618075801749271, "forecasting_metrics": {"rmse_per_class": [1305.488454183825, 1639.4435432392324], "average_rmse": 1472.4659987115288, "train_time": 12.339723587036133}, "train_time": 12.834342002868652}
-{"dataset_name": "Chinatown", "m": 10, "R": 3, "classification_accuracy": 0.6938775510204082, "forecasting_metrics": {"rmse_per_class": [351.45286115378855, 308.0375336847292], "average_rmse": 329.7451974192589, "train_time": 14.83793592453003}, "train_time": 13.576885223388672}
-{"dataset_name": "Chinatown", "m": 10, "R": 3, "classification_accuracy": 0.6909620991253644, "forecasting_metrics": {"rmse_per_class": [745.2628845842983, 387.49289066639744], "average_rmse": 566.3778876253479, "train_time": 13.274450540542603}, "train_time": 13.250843286514282}
+[
+  {
+    "dataset_name": "Chinatown",
+    "m": 5,
+    "R": 2,
+    "classification_accuracy": 0.6472303206997084,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        2736.1272325730797,
+        3132.1614926555258
+      ],
+      "average_rmse": 2934.1443626143027,
+      "train_time": 7.8287413120269775
+    },
+    "train_time": 6.950432062149048
+  },
+  {
+    "dataset_name": "Chinatown",
+    "m": 5,
+    "R": 2,
+    "classification_accuracy": 0.6938775510204082,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        630.8180979844939,
+        1379.4247353631602
+      ],
+      "average_rmse": 1005.1214166738271,
+      "train_time": 6.5324461460113525
+    },
+    "train_time": 7.618917942047119
+  },
+  {
+    "dataset_name": "Chinatown",
+    "m": 5,
+    "R": 2,
+    "classification_accuracy": 0.6880466472303207,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        352.7392972103168,
+        325.57742199164926
+      ],
+      "average_rmse": 339.15835960098303,
+      "train_time": 7.019761800765991
+    },
+    "train_time": 12.447906732559204
+  },
+  {
+    "dataset_name": "Chinatown",
+    "m": 5,
+    "R": 3,
+    "classification_accuracy": 0.6997084548104956,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        360.19265908515234,
+        2921.557588259132
+      ],
+      "average_rmse": 1640.875123672142,
+      "train_time": 16.214635610580444
+    },
+    "train_time": 14.333276510238647
+  },
+  {
+    "dataset_name": "Chinatown",
+    "m": 5,
+    "R": 3,
+    "classification_accuracy": 0.6763848396501457,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        2116.500288427338,
+        2653.572892293401
+      ],
+      "average_rmse": 2385.0365903603697,
+      "train_time": 14.039886474609375
+    },
+    "train_time": 14.658300161361694
+  },
+  {
+    "dataset_name": "Chinatown",
+    "m": 5,
+    "R": 3,
+    "classification_accuracy": 0.7084548104956269,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        2673.8947232119417,
+        2784.7462499277253
+      ],
+      "average_rmse": 2729.3204865698335,
+      "train_time": 17.20240068435669
+    },
+    "train_time": 19.304592609405518
+  },
+  {
+    "dataset_name": "Chinatown",
+    "m": 10,
+    "R": 2,
+    "classification_accuracy": 0.6705539358600583,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        347.27961415842015,
+        352.9621247841052
+      ],
+      "average_rmse": 350.12086947126267,
+      "train_time": 9.145734071731567
+    },
+    "train_time": 9.95226788520813
+  },
+  {
+    "dataset_name": "Chinatown",
+    "m": 10,
+    "R": 2,
+    "classification_accuracy": 0.6938775510204082,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        545.593027920479,
+        472.20820189836587
+      ],
+      "average_rmse": 508.9006149094224,
+      "train_time": 10.970177173614502
+    },
+    "train_time": 9.212565898895264
+  },
+  {
+    "dataset_name": "Chinatown",
+    "m": 10,
+    "R": 2,
+    "classification_accuracy": 0.6822157434402333,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        472.01223283106884,
+        429.7748516913269
+      ],
+      "average_rmse": 450.89354226119787,
+      "train_time": 10.968600988388062
+    },
+    "train_time": 7.947273015975952
+  },
+  {
+    "dataset_name": "Chinatown",
+    "m": 10,
+    "R": 3,
+    "classification_accuracy": 0.6618075801749271,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        1305.488454183825,
+        1639.4435432392324
+      ],
+      "average_rmse": 1472.4659987115288,
+      "train_time": 12.339723587036133
+    },
+    "train_time": 12.834342002868652
+  },
+  {
+    "dataset_name": "Chinatown",
+    "m": 10,
+    "R": 3,
+    "classification_accuracy": 0.6938775510204082,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        351.45286115378855,
+        308.0375336847292
+      ],
+      "average_rmse": 329.7451974192589,
+      "train_time": 14.83793592453003
+    },
+    "train_time": 13.576885223388672
+  },
+  {
+    "dataset_name": "Chinatown",
+    "m": 10,
+    "R": 3,
+    "classification_accuracy": 0.6909620991253644,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        745.2628845842983,
+        387.49289066639744
+      ],
+      "average_rmse": 566.3778876253479,
+      "train_time": 13.274450540542603
+    },
+    "train_time": 13.250843286514282
+  }
+]

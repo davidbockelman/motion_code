@@ -1,4 +1,67 @@
-# Motion Code
+# Motion Code (Extended with Mixture of Experts)
+
+> **Note**: This repository is a fork of the original [Motion Code](https://github.com/original-motion-code) framework, extended with a **Mixture of Experts (MOE)** architecture for improved performance and interpretability.
+
+## ⚠️ Important Note on Repository State
+
+**Many of the original files in this repository are currently broken or non-functional.** The majority of actively used and maintained scripts have been moved to the **`scripts/`** directory. When working with this repository:
+
+- **Use scripts from `scripts/` directory**: Most working analysis, visualization, and comparison scripts are located in `scripts/`
+- **Core functionality**: The core Motion Code model files (`motion_code.py`, `motion_code_utils.py`, `sparse_gp.py`) remain functional
+- **Original scripts**: Many original scripts in the root directory may not work due to dependency issues or changes made during the MOE extension
+
+### Working Scripts in `scripts/`:
+- `plot_inducing_timestamps.py` - Visualize inducing timestamps per expert
+- `plot_forecasting_with_experts.py` - Plot forecasting with expert contributions
+- `plot_effective_experts.py` - Analyze effective number of experts
+- `plot_r_sweep_effective_experts.py` - Plot effective experts vs R
+- `extract_model_info.py` - Extract model information to JSON
+- `compare_motion_code_vs_moe.py` - Compare standard vs MOE performance
+- `compare_synthetic_performance.py` - Compare performance on synthetic data
+- `create_synthetic_dataset.py` - Create synthetic datasets
+- `add_noise_and_save_data.py` - Add noise to datasets
+
+## Extensions to Motion Code
+
+This fork extends the original Motion Code framework with the following key enhancements:
+
+### 1. Mixture of Experts (MOE) Architecture
+- **Multiple Experts**: The model now supports multiple global motion codes (experts) via the `R` parameter, allowing the model to learn diverse temporal patterns
+- **Expert Weighting**: Each class learns per-expert weights that determine how much each expert contributes to predictions
+- **Regularization**: Added `lambda_reg` (L2 regularization for expert codes) and `lambda_weight_reg` (regularization for expert weight diversity) to improve generalization
+
+### 2. Enhanced Visualization and Analysis Tools
+All visualization and analysis scripts are located in the `scripts/` directory:
+- **`scripts/plot_inducing_timestamps.py`**: Visualizes inducing timestamps per expert, with dot sizes proportional to expert weights
+- **`scripts/plot_forecasting_with_experts.py`**: Shows forecasting predictions with individual expert contributions and overall weighted prediction
+- **`scripts/plot_effective_experts.py`**: Analyzes the effective number of experts used (entropy-based calculation)
+- **`scripts/plot_r_sweep_effective_experts.py`**: Plots effective number of experts vs. number of experts (R)
+- **`scripts/extract_model_info.py`**: Extracts and exports inducing timestamps and expert weights to JSON format
+- **`scripts/compare_motion_code_vs_moe.py`**: Compares performance between standard Motion Code and MOE variants
+- **`scripts/compare_synthetic_performance.py`**: Compares performance on synthetic datasets
+
+### 3. Additional Features
+- **Expert Analysis**: Tools to analyze which experts are most important for each class
+- **Model Interpretability**: Enhanced visualization of how different experts contribute to predictions
+- **Performance Comparison**: Scripts to compare MOE vs. standard Motion Code across different hyperparameters
+
+### Usage with MOE
+To use the Mixture of Experts extension, simply specify the `R` parameter (number of experts) when initializing the model:
+
+```python
+from motion_code import MotionCode
+# Standard Motion Code (R=1, default)
+model = MotionCode(m=10, Q=1, latent_dim=2, sigma_y=0.1)
+
+# Motion Code with Mixture of Experts (R=3 experts)
+model = MotionCode(m=10, Q=1, latent_dim=2, sigma_y=0.1, R=3)
+
+# With regularization
+model = MotionCode(m=10, Q=1, latent_dim=2, sigma_y=0.1, R=3, 
+                   lambda_reg=0.01, lambda_weight_reg=0.01)
+```
+
+---
 
 ## I. Introduction
 In this work, we employ variational inference and stochastic process modeling to develop a framework called
@@ -152,6 +215,40 @@ Change the dataset argument as needed (e.g., `Pronunciation Audio`, `PD setting 
    python visualize.py --type="forecast_motion_code" --dataset="ItalyPowerDemand"
    ```
 
+### 3. Mixture of Experts Visualization (New)
+This fork includes additional visualization tools for analyzing the MOE architecture:
+
+#### Inducing Timestamps Visualization
+Visualize inducing timestamps per expert on top of a time series sample:
+```sh
+python scripts/plot_inducing_timestamps.py saved_models/model_path --dataset ItalyPowerDemand
+```
+
+#### Forecasting with Expert Contributions
+Plot forecasting predictions showing individual expert contributions:
+```sh
+python scripts/plot_forecasting_with_experts.py saved_models/model_path --dataset ItalyPowerDemand
+```
+
+#### Effective Number of Experts Analysis
+Analyze how many experts are effectively used:
+```sh
+python scripts/plot_effective_experts.py sweep_results.json --output effective_experts.png
+python scripts/plot_r_sweep_effective_experts.py rSweep_results.json --output r_sweep_effective.png
+```
+
+#### Model Information Extraction
+Extract inducing timestamps and expert weights to JSON:
+```sh
+python scripts/extract_model_info.py saved_models/model_path --json-output model_info.json
+```
+
+#### Performance Comparison
+Compare standard Motion Code vs. MOE:
+```sh
+python scripts/compare_motion_code_vs_moe.py --m-sweep-json sweepLightning7.json --m-sweep-csv lightning7_sweep_m_values.csv
+```
+
 ## V. File Structure
 ```text
 .
@@ -168,7 +265,7 @@ Change the dataset argument as needed (e.g., `Pronunciation Audio`, `PD setting 
 │   │   └── ablation_accuracy_results.csv
 │   ├── classify_*.csv          # Classification benchmark results
 │
-├── motion_code.py                # Core Motion Code model
+├── motion_code.py                # Core Motion Code model (extended with MOE)
 ├── motion_code_utils.py          # Supporting functions for model logic
 ├── sparse_gp.py                  # Sparse Gaussian Process backend
 │
@@ -183,6 +280,17 @@ Change the dataset argument as needed (e.g., `Pronunciation Audio`, `PD setting 
 ├── collect_all_benchmarks.ipynb  # Summary of all benchmark results
 │
 ├── visualize.py                  # Generates interpretability/forecast visualizations
+│
+├── scripts/                      # Working analysis and visualization scripts (MOE)
+│   ├── plot_inducing_timestamps.py   # Visualize inducing timestamps per expert
+│   ├── plot_forecasting_with_experts.py  # Plot forecasting with expert contributions
+│   ├── plot_effective_experts.py    # Analyze effective number of experts
+│   ├── plot_r_sweep_effective_experts.py  # Plot effective experts vs R
+│   ├── extract_model_info.py        # Extract model info to JSON
+│   ├── compare_motion_code_vs_moe.py  # Compare standard vs MOE performance
+│   ├── compare_synthetic_performance.py  # Compare performance on synthetic data
+│   ├── create_synthetic_dataset.py  # Create synthetic datasets
+│   └── add_noise_and_save_data.py  # Add noise to datasets
 │
 ├── tutorial_notebook.ipynb       # Core tutorial notebook (placed at top level)
 │

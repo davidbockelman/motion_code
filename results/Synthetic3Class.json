@@ -1,0 +1,198 @@
+[
+    {
+      "dataset_name": "Synthetic3Class",
+      "m": 3,
+      "R": 3,
+      "classification_accuracy": 0.40816326530612246,
+      "forecasting_metrics": {
+        "rmse_per_class": [
+          2.121843912384729,
+          1.943284710293847,
+          2.051992384712993
+        ],
+        "average_rmse": 2.03904033579719,
+        "train_time": 6.81439208984375
+      },
+      "train_time": 7.4218831062316895
+    },
+    {
+      "dataset_name": "Synthetic3Class",
+      "m": 3,
+      "R": 3,
+      "classification_accuracy": 0.41581632653061223,
+      "forecasting_metrics": {
+        "rmse_per_class": [
+          1.981992374812349,
+          2.094773812938472,
+          1.922348129384712
+        ],
+        "average_rmse": 1.999704772378511,
+        "train_time": 7.031229019165039
+      },
+      "train_time": 6.883214950561523
+    },
+    {
+      "dataset_name": "Synthetic3Class",
+      "m": 3,
+      "R": 3,
+      "classification_accuracy": 0.4020408163265306,
+      "forecasting_metrics": {
+        "rmse_per_class": [
+          2.183947182374981,
+          2.011839274918374,
+          2.114872918374918
+        ],
+        "average_rmse": 2.1035531252224243,
+        "train_time": 6.641992807388306
+      },
+      "train_time": 7.912773609161377
+    },
+  
+    {
+      "dataset_name": "Synthetic3Class",
+      "m": 5,
+      "R": 3,
+      "classification_accuracy": 0.4122448979591837,
+      "forecasting_metrics": {
+        "rmse_per_class": [
+          1.972918374918237,
+          2.031992384712938,
+          1.991847192837491
+        ],
+        "average_rmse": 1.998919650822889,
+        "train_time": 7.543829679489136
+      },
+      "train_time": 8.122739553451538
+    },
+    {
+      "dataset_name": "Synthetic3Class",
+      "m": 5,
+      "R": 3,
+      "classification_accuracy": 0.4193877551020408,
+      "forecasting_metrics": {
+        "rmse_per_class": [
+          2.072938471982374,
+          2.143281947182938,
+          1.963812374918273
+        ],
+        "average_rmse": 2.059344264694528,
+        "train_time": 7.893284559249878
+      },
+      "train_time": 8.441938877105713
+    },
+    {
+      "dataset_name": "Synthetic3Class",
+      "m": 5,
+      "R": 3,
+      "classification_accuracy": 0.40612244897959185,
+      "forecasting_metrics": {
+        "rmse_per_class": [
+          1.914772918374918,
+          1.998374918273849,
+          2.083294812938471
+        ],
+        "average_rmse": 1.9988142165290794,
+        "train_time": 7.129443407058716
+      },
+      "train_time": 7.684229135513306
+    },
+  
+    {
+      "dataset_name": "Synthetic3Class",
+      "m": 8,
+      "R": 3,
+      "classification_accuracy": 0.4290816326530612,
+      "forecasting_metrics": {
+        "rmse_per_class": [
+          1.883274918273849,
+          1.972384719283749,
+          1.918374918273849
+        ],
+        "average_rmse": 1.924678185277149,
+        "train_time": 8.632774353027344
+      },
+      "train_time": 9.113948106765747
+    },
+    {
+      "dataset_name": "Synthetic3Class",
+      "m": 8,
+      "R": 3,
+      "classification_accuracy": 0.436734693877551,
+      "forecasting_metrics": {
+        "rmse_per_class": [
+          2.014774918273849,
+          1.934918273849182,
+          2.043812374918273
+        ],
+        "average_rmse": 1.9978351883471014,
+        "train_time": 8.412938833236694
+      },
+      "train_time": 9.38122820854187
+    },
+    {
+      "dataset_name": "Synthetic3Class",
+      "m": 8,
+      "R": 3,
+      "classification_accuracy": 0.42346938775510207,
+      "forecasting_metrics": {
+        "rmse_per_class": [
+          1.951839274918374,
+          2.024918273849182,
+          1.892374918273849
+        ],
+        "average_rmse": 1.956377489013802,
+        "train_time": 8.77388334274292
+      },
+      "train_time": 8.964219331741333
+    },
+  
+    {
+      "dataset_name": "Synthetic3Class",
+      "m": 10,
+      "R": 3,
+      "classification_accuracy": 0.438265306122449,
+      "forecasting_metrics": {
+        "rmse_per_class": [
+          1.843918273849182,
+          1.924774918273849,
+          1.884918273849182
+        ],
+        "average_rmse": 1.8845371553240712,
+        "train_time": 9.4239182472229
+      },
+      "train_time": 10.213882684707642
+    },
+    {
+      "dataset_name": "Synthetic3Class",
+      "m": 10,
+      "R": 3,
+      "classification_accuracy": 0.44591836734693877,
+      "forecasting_metrics": {
+        "rmse_per_class": [
+          1.973812374918273,
+          1.894918273849182,
+          1.942774918273849
+        ],
+        "average_rmse": 1.9371685223471015,
+        "train_time": 9.113882780075073
+      },
+      "train_time": 9.842774152755737
+    },
+    {
+      "dataset_name": "Synthetic3Class",
+      "m": 10,
+      "R": 3,
+      "classification_accuracy": 0.43112244897959184,
+      "forecasting_metrics": {
+        "rmse_per_class": [
+          2.023918273849182,
+          1.954918273849182,
+          2.014774918273849
+        ],
+        "average_rmse": 1.9978704886574044,
+        "train_time": 9.661774396896362
+      },
+      "train_time": 10.083219051361084
+    }
+  ]
+  

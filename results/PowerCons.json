@@ -1,3 +1,182 @@
-{"dataset_name": "PowerCons", "m": 5, "R": 2, "classification_accuracy": 0.9055555555555556, "forecasting_metrics": {"rmse_per_class": [0.929930335869574, 1.3831896390409086], "average_rmse": 1.1565599874552412, "train_time": 724.9374129772186}, "train_time": 2116.13543176651}
-{"dataset_name": "PowerCons", "m": 5, "R": 2, "classification_accuracy": 0.9166666666666666, "forecasting_metrics": {"rmse_per_class": [0.9298184829941412, 1.3828750206680056], "average_rmse": 1.1563467518310735, "train_time": 717.2806973457336}, "train_time": 2094.4672770500183}
-{"dataset_name": "PowerCons", "m": 5, "R": 2, "classification_accuracy": 0.9, "forecasting_metrics": {"rmse_per_class": [1.016606278166067, 1.6412877090873113], "average_rmse": 1.328946993626689, "train_time": 736.0960931777954}, "train_time": 2001.4881942272186}
+[
+  {
+    "dataset_name": "PowerCons",
+    "m": 5,
+    "R": 2,
+    "classification_accuracy": 0.9055555555555556,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        0.929930335869574,
+        1.3831896390409086
+      ],
+      "average_rmse": 1.1565599874552412,
+      "train_time": 724.9374129772186
+    },
+    "train_time": 2116.13543176651
+  },
+  {
+    "dataset_name": "PowerCons",
+    "m": 5,
+    "R": 2,
+    "classification_accuracy": 0.9166666666666666,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        0.9298184829941412,
+        1.3828750206680056
+      ],
+      "average_rmse": 1.1563467518310735,
+      "train_time": 717.2806973457336
+    },
+    "train_time": 2094.4672770500183
+  },
+  {
+    "dataset_name": "PowerCons",
+    "m": 5,
+    "R": 2,
+    "classification_accuracy": 0.9,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        1.016606278166067,
+        1.6412877090873113
+      ],
+      "average_rmse": 1.328946993626689,
+      "train_time": 736.0960931777954
+    },
+    "train_time": 2001.4881942272186
+  },
+  {
+    "dataset_name": "PowerCons",
+    "m": 5,
+    "R": 3,
+    "classification_accuracy": 0.9111111111111111,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        0.9054123318821473,
+        1.342881245309672
+      ],
+      "average_rmse": 1.1241467885959098,
+      "train_time": 812.3381443023682
+    },
+    "train_time": 2315.4419827461243
+  },
+  {
+    "dataset_name": "PowerCons",
+    "m": 5,
+    "R": 3,
+    "classification_accuracy": 0.9166666666666666,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        0.8983317742240081,
+        1.3317720430194424
+      ],
+      "average_rmse": 1.1150519086217252,
+      "train_time": 798.194503068924
+    },
+    "train_time": 2287.993581056595
+  },
+  {
+    "dataset_name": "PowerCons",
+    "m": 5,
+    "R": 3,
+    "classification_accuracy": 0.9055555555555556,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        0.9421937012218344,
+        1.3821049965012442
+      ],
+      "average_rmse": 1.1621493488615393,
+      "train_time": 835.7208135128021
+    },
+    "train_time": 2361.881330013275
+  },
+  {
+    "dataset_name": "PowerCons",
+    "m": 10,
+    "R": 2,
+    "classification_accuracy": 0.9277777777777778,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        0.8738829931842216,
+        1.301094212833244
+      ],
+      "average_rmse": 1.0874886030087327,
+      "train_time": 945.4188323020935
+    },
+    "train_time": 2694.331229686737
+  },
+  {
+    "dataset_name": "PowerCons",
+    "m": 10,
+    "R": 2,
+    "classification_accuracy": 0.9222222222222223,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        0.8912231558123319,
+        1.3177440184042224
+      ],
+      "average_rmse": 1.1044835871082772,
+      "train_time": 961.7720382213593
+    },
+    "train_time": 2749.8119916915894
+  },
+  {
+    "dataset_name": "PowerCons",
+    "m": 10,
+    "R": 2,
+    "classification_accuracy": 0.9333333333333333,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        0.8629124419440037,
+        1.288118200501339
+      ],
+      "average_rmse": 1.0755153212226713,
+      "train_time": 932.664920091629
+    },
+    "train_time": 2671.4442207813263
+  },
+  {
+    "dataset_name": "PowerCons",
+    "m": 10,
+    "R": 3,
+    "classification_accuracy": 0.9388888888888889,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        0.8415508842198831,
+        1.251663882109442
+      ],
+      "average_rmse": 1.0466073831646625,
+      "train_time": 1044.993812084198
+    },
+    "train_time": 3012.774880170822
+  },
+  {
+    "dataset_name": "PowerCons",
+    "m": 10,
+    "R": 3,
+    "classification_accuracy": 0.9333333333333333,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        0.8564211947704434,
+        1.266994103991822
+      ],
+      "average_rmse": 1.0617076493811326,
+      "train_time": 1027.4419932365417
+    },
+    "train_time": 2968.883414030075
+  },
+  {
+    "dataset_name": "PowerCons",
+    "m": 10,
+    "R": 3,
+    "classification_accuracy": 0.9444444444444444,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        0.8327731120192247,
+        1.241998309772114
+      ],
+      "average_rmse": 1.0373857108956692,
+      "train_time": 1068.113002538681
+    },
+    "train_time": 3055.992771863937
+  }
+]

@@ -1,12 +1,182 @@
-{"dataset_name": "MoteStrain", "m": 5, "R": 2, "classification_accuracy": 0.700479233226837, "forecasting_metrics": {"rmse_per_class": [0.8292330217192037, 0.7343527478395531], "average_rmse": 0.7817928847793784, "train_time": 17.75143814086914}, "train_time": 7.3638916015625}
-{"dataset_name": "MoteStrain", "m": 5, "R": 2, "classification_accuracy": 0.7180511182108626, "forecasting_metrics": {"rmse_per_class": [0.8291017623298454, 0.7345669011748408], "average_rmse": 0.7818343317523431, "train_time": 8.890394926071167}, "train_time": 7.296145677566528}
-{"dataset_name": "MoteStrain", "m": 5, "R": 2, "classification_accuracy": 0.7180511182108626, "forecasting_metrics": {"rmse_per_class": [0.8436144040472833, 0.734535518762852], "average_rmse": 0.7890749614050676, "train_time": 8.413240432739258}, "train_time": 7.332189083099365}
-{"dataset_name": "MoteStrain", "m": 5, "R": 3, "classification_accuracy": 0.700479233226837, "forecasting_metrics": {"rmse_per_class": [0.8214813695015037, 0.7289128344269341], "average_rmse": 0.775197101964219, "train_time": 12.563737630844116}, "train_time": 11.516042709350586}
-{"dataset_name": "MoteStrain", "m": 5, "R": 3, "classification_accuracy": 0.7116613418530351, "forecasting_metrics": {"rmse_per_class": [0.8236050479959592, 0.8608829371705362], "average_rmse": 0.8422439925832477, "train_time": 12.32750415802002}, "train_time": 12.266523122787476}
-{"dataset_name": "MoteStrain", "m": 5, "R": 3, "classification_accuracy": 0.7180511182108626, "forecasting_metrics": {"rmse_per_class": [0.829103431603866, 0.7346041642038869], "average_rmse": 0.7818537979038764, "train_time": 13.133874654769897}, "train_time": 11.915807247161865}
-{"dataset_name": "MoteStrain", "m": 10, "R": 2, "classification_accuracy": 0.7396166134185304, "forecasting_metrics": {"rmse_per_class": [1.0133616296521712, 1.0333491586934018], "average_rmse": 1.0233553941727864, "train_time": 9.150220155715942}, "train_time": 7.984553575515747}
-{"dataset_name": "MoteStrain", "m": 10, "R": 2, "classification_accuracy": 0.7204472843450479, "forecasting_metrics": {"rmse_per_class": [1.013367129109605, 1.0333533006028175], "average_rmse": 1.0233602148562113, "train_time": 8.832444190979004}, "train_time": 8.665573358535767}
-{"dataset_name": "MoteStrain", "m": 10, "R": 2, "classification_accuracy": 0.7220447284345048, "forecasting_metrics": {"rmse_per_class": [0.8230871916480194, 0.8285254315404481], "average_rmse": 0.8258063115942338, "train_time": 8.80025053024292}, "train_time": 11.639009952545166}
-{"dataset_name": "MoteStrain", "m": 10, "R": 3, "classification_accuracy": 0.7364217252396166, "forecasting_metrics": {"rmse_per_class": [1.013370538707882, 1.0333548008840612], "average_rmse": 1.0233626697959717, "train_time": 14.122416734695435}, "train_time": 11.598850727081299}
-{"dataset_name": "MoteStrain", "m": 10, "R": 3, "classification_accuracy": 0.7284345047923323, "forecasting_metrics": {"rmse_per_class": [0.8245225208029743, 0.8004552032634706], "average_rmse": 0.8124888620332225, "train_time": 22.597145318984985}, "train_time": 12.21177625656128}
-{"dataset_name": "MoteStrain", "m": 10, "R": 3, "classification_accuracy": 0.7172523961661342, "forecasting_metrics": {"rmse_per_class": [0.7494949746106785, 0.699497240592475], "average_rmse": 0.7244961076015768, "train_time": 18.83396887779236}, "train_time": 19.74042057991028}
+[
+  {
+    "dataset_name": "MoteStrain",
+    "m": 5,
+    "R": 2,
+    "classification_accuracy": 0.700479233226837,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        0.8292330217192037,
+        0.7343527478395531
+      ],
+      "average_rmse": 0.7817928847793784,
+      "train_time": 17.75143814086914
+    },
+    "train_time": 7.3638916015625
+  },
+  {
+    "dataset_name": "MoteStrain",
+    "m": 5,
+    "R": 2,
+    "classification_accuracy": 0.7180511182108626,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        0.8291017623298454,
+        0.7345669011748408
+      ],
+      "average_rmse": 0.7818343317523431,
+      "train_time": 8.890394926071167
+    },
+    "train_time": 7.296145677566528
+  },
+  {
+    "dataset_name": "MoteStrain",
+    "m": 5,
+    "R": 2,
+    "classification_accuracy": 0.7180511182108626,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        0.8436144040472833,
+        0.734535518762852
+      ],
+      "average_rmse": 0.7890749614050676,
+      "train_time": 8.413240432739258
+    },
+    "train_time": 7.332189083099365
+  },
+  {
+    "dataset_name": "MoteStrain",
+    "m": 5,
+    "R": 3,
+    "classification_accuracy": 0.700479233226837,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        0.8214813695015037,
+        0.7289128344269341
+      ],
+      "average_rmse": 0.775197101964219,
+      "train_time": 12.563737630844116
+    },
+    "train_time": 11.516042709350586
+  },
+  {
+    "dataset_name": "MoteStrain",
+    "m": 5,
+    "R": 3,
+    "classification_accuracy": 0.7116613418530351,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        0.8236050479959592,
+        0.8608829371705362
+      ],
+      "average_rmse": 0.8422439925832477,
+      "train_time": 12.32750415802002
+    },
+    "train_time": 12.266523122787476
+  },
+  {
+    "dataset_name": "MoteStrain",
+    "m": 5,
+    "R": 3,
+    "classification_accuracy": 0.7180511182108626,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        0.829103431603866,
+        0.7346041642038869
+      ],
+      "average_rmse": 0.7818537979038764,
+      "train_time": 13.133874654769897
+    },
+    "train_time": 11.915807247161865
+  },
+  {
+    "dataset_name": "MoteStrain",
+    "m": 10,
+    "R": 2,
+    "classification_accuracy": 0.7396166134185304,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        1.0133616296521712,
+        1.0333491586934018
+      ],
+      "average_rmse": 1.0233553941727864,
+      "train_time": 9.150220155715942
+    },
+    "train_time": 7.984553575515747
+  },
+  {
+    "dataset_name": "MoteStrain",
+    "m": 10,
+    "R": 2,
+    "classification_accuracy": 0.7204472843450479,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        1.013367129109605,
+        1.0333533006028175
+      ],
+      "average_rmse": 1.0233602148562113,
+      "train_time": 8.832444190979004
+    },
+    "train_time": 8.665573358535767
+  },
+  {
+    "dataset_name": "MoteStrain",
+    "m": 10,
+    "R": 2,
+    "classification_accuracy": 0.7220447284345048,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        0.8230871916480194,
+        0.8285254315404481
+      ],
+      "average_rmse": 0.8258063115942338,
+      "train_time": 8.80025053024292
+    },
+    "train_time": 11.639009952545166
+  },
+  {
+    "dataset_name": "MoteStrain",
+    "m": 10,
+    "R": 3,
+    "classification_accuracy": 0.7364217252396166,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        1.013370538707882,
+        1.0333548008840612
+      ],
+      "average_rmse": 1.0233626697959717,
+      "train_time": 14.122416734695435
+    },
+    "train_time": 11.598850727081299
+  },
+  {
+    "dataset_name": "MoteStrain",
+    "m": 10,
+    "R": 3,
+    "classification_accuracy": 0.7284345047923323,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        0.8245225208029743,
+        0.8004552032634706
+      ],
+      "average_rmse": 0.8124888620332225,
+      "train_time": 22.597145318984985
+    },
+    "train_time": 12.21177625656128
+  },
+  {
+    "dataset_name": "MoteStrain",
+    "m": 10,
+    "R": 3,
+    "classification_accuracy": 0.7172523961661342,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        0.7494949746106785,
+        0.699497240592475
+      ],
+      "average_rmse": 0.7244961076015768,
+      "train_time": 18.83396887779236
+    },
+    "train_time": 19.74042057991028
+  }
+]

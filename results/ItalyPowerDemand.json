@@ -1,12 +1,182 @@
-{"dataset_name": "ItalyPowerDemand", "m": 5, "R": 2, "classification_accuracy": 0.7220602526724975, "forecasting_metrics": {"rmse_per_class": [0.6830856558376847, 0.5815719728709494], "average_rmse": 0.6323288143543171, "train_time": 68.69916605949402}, "train_time": 70.35543465614319}
-{"dataset_name": "ItalyPowerDemand", "m": 5, "R": 2, "classification_accuracy": 0.7045675413022352, "forecasting_metrics": {"rmse_per_class": [2.119793415925571, 0.7938773044792108], "average_rmse": 1.456835360202391, "train_time": 66.4493408203125}, "train_time": 67.8503041267395}
-{"dataset_name": "ItalyPowerDemand", "m": 5, "R": 2, "classification_accuracy": 0.7230320699708455, "forecasting_metrics": {"rmse_per_class": [0.6800906576594867, 0.5815235350842831], "average_rmse": 0.6308070963718849, "train_time": 71.15157127380371}, "train_time": 66.96828627586365}
-{"dataset_name": "ItalyPowerDemand", "m": 5, "R": 3, "classification_accuracy": 0.7016520894071915, "forecasting_metrics": {"rmse_per_class": [0.6811257392701757, 0.5815592322716209], "average_rmse": 0.6313424857708982, "train_time": 228.37668371200562}, "train_time": 222.94455790519714}
-{"dataset_name": "ItalyPowerDemand", "m": 5, "R": 3, "classification_accuracy": 0.7016520894071915, "forecasting_metrics": {"rmse_per_class": [1.9873232045053035, 0.8719615678370259], "average_rmse": 1.4296423861711647, "train_time": 231.34950709342957}, "train_time": 223.33559942245483}
-{"dataset_name": "ItalyPowerDemand", "m": 5, "R": 3, "classification_accuracy": 0.7016520894071915, "forecasting_metrics": {"rmse_per_class": [0.6840331230077994, 0.5815672677379822], "average_rmse": 0.6328001953728908, "train_time": 232.70452094078064}, "train_time": 230.44767475128174}
-{"dataset_name": "ItalyPowerDemand", "m": 10, "R": 2, "classification_accuracy": 0.7628765792031098, "forecasting_metrics": {"rmse_per_class": [0.6457116797706843, 0.887965671658891], "average_rmse": 0.7668386757147876, "train_time": 73.35164523124695}, "train_time": 71.9377121925354}
-{"dataset_name": "ItalyPowerDemand", "m": 10, "R": 2, "classification_accuracy": 0.7677356656948494, "forecasting_metrics": {"rmse_per_class": [0.5015629206012444, 0.6667683172715119], "average_rmse": 0.5841656189363782, "train_time": 77.92637157440186}, "train_time": 70.74346351623535}
-{"dataset_name": "ItalyPowerDemand", "m": 10, "R": 2, "classification_accuracy": 0.7249757045675413, "forecasting_metrics": {"rmse_per_class": [0.6456937854610245, 0.8879789521691616], "average_rmse": 0.766836368815093, "train_time": 71.10791683197021}, "train_time": 65.56206941604614}
-{"dataset_name": "ItalyPowerDemand", "m": 10, "R": 3, "classification_accuracy": 0.7648202137998056, "forecasting_metrics": {"rmse_per_class": [0.534511389117724, 0.6679987841134535], "average_rmse": 0.6012550866155888, "train_time": 243.39423298835754}, "train_time": 245.02814865112305}
-{"dataset_name": "ItalyPowerDemand", "m": 10, "R": 3, "classification_accuracy": 0.7677356656948494, "forecasting_metrics": {"rmse_per_class": [0.6074699664395128, 1.121368972814143], "average_rmse": 0.8644194696268279, "train_time": 246.67800283432007}, "train_time": 229.9164228439331}
-{"dataset_name": "ItalyPowerDemand", "m": 10, "R": 3, "classification_accuracy": 0.7677356656948494, "forecasting_metrics": {"rmse_per_class": [0.5339758979627326, 0.6686418108222127], "average_rmse": 0.6013088543924727, "train_time": 231.43225765228271}, "train_time": 229.09271597862244}
+[
+  {
+    "dataset_name": "ItalyPowerDemand",
+    "m": 5,
+    "R": 2,
+    "classification_accuracy": 0.7220602526724975,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        0.6830856558376847,
+        0.5815719728709494
+      ],
+      "average_rmse": 0.6323288143543171,
+      "train_time": 68.69916605949402
+    },
+    "train_time": 70.35543465614319
+  },
+  {
+    "dataset_name": "ItalyPowerDemand",
+    "m": 5,
+    "R": 2,
+    "classification_accuracy": 0.7045675413022352,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        2.119793415925571,
+        0.7938773044792108
+      ],
+      "average_rmse": 1.456835360202391,
+      "train_time": 66.4493408203125
+    },
+    "train_time": 67.8503041267395
+  },
+  {
+    "dataset_name": "ItalyPowerDemand",
+    "m": 5,
+    "R": 2,
+    "classification_accuracy": 0.7230320699708455,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        0.6800906576594867,
+        0.5815235350842831
+      ],
+      "average_rmse": 0.6308070963718849,
+      "train_time": 71.15157127380371
+    },
+    "train_time": 66.96828627586365
+  },
+  {
+    "dataset_name": "ItalyPowerDemand",
+    "m": 5,
+    "R": 3,
+    "classification_accuracy": 0.7016520894071915,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        0.6811257392701757,
+        0.5815592322716209
+      ],
+      "average_rmse": 0.6313424857708982,
+      "train_time": 228.37668371200562
+    },
+    "train_time": 222.94455790519714
+  },
+  {
+    "dataset_name": "ItalyPowerDemand",
+    "m": 5,
+    "R": 3,
+    "classification_accuracy": 0.7016520894071915,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        1.9873232045053035,
+        0.8719615678370259
+      ],
+      "average_rmse": 1.4296423861711647,
+      "train_time": 231.34950709342957
+    },
+    "train_time": 223.33559942245483
+  },
+  {
+    "dataset_name": "ItalyPowerDemand",
+    "m": 5,
+    "R": 3,
+    "classification_accuracy": 0.7016520894071915,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        0.6840331230077994,
+        0.5815672677379822
+      ],
+      "average_rmse": 0.6328001953728908,
+      "train_time": 232.70452094078064
+    },
+    "train_time": 230.44767475128174
+  },
+  {
+    "dataset_name": "ItalyPowerDemand",
+    "m": 10,
+    "R": 2,
+    "classification_accuracy": 0.7628765792031098,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        0.6457116797706843,
+        0.887965671658891
+      ],
+      "average_rmse": 0.7668386757147876,
+      "train_time": 73.35164523124695
+    },
+    "train_time": 71.9377121925354
+  },
+  {
+    "dataset_name": "ItalyPowerDemand",
+    "m": 10,
+    "R": 2,
+    "classification_accuracy": 0.7677356656948494,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        0.5015629206012444,
+        0.6667683172715119
+      ],
+      "average_rmse": 0.5841656189363782,
+      "train_time": 77.92637157440186
+    },
+    "train_time": 70.74346351623535
+  },
+  {
+    "dataset_name": "ItalyPowerDemand",
+    "m": 10,
+    "R": 2,
+    "classification_accuracy": 0.7249757045675413,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        0.6456937854610245,
+        0.8879789521691616
+      ],
+      "average_rmse": 0.766836368815093,
+      "train_time": 71.10791683197021
+    },
+    "train_time": 65.56206941604614
+  },
+  {
+    "dataset_name": "ItalyPowerDemand",
+    "m": 10,
+    "R": 3,
+    "classification_accuracy": 0.7648202137998056,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        0.534511389117724,
+        0.6679987841134535
+      ],
+      "average_rmse": 0.6012550866155888,
+      "train_time": 243.39423298835754
+    },
+    "train_time": 245.02814865112305
+  },
+  {
+    "dataset_name": "ItalyPowerDemand",
+    "m": 10,
+    "R": 3,
+    "classification_accuracy": 0.7677356656948494,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        0.6074699664395128,
+        1.121368972814143
+      ],
+      "average_rmse": 0.8644194696268279,
+      "train_time": 246.67800283432007
+    },
+    "train_time": 229.9164228439331
+  },
+  {
+    "dataset_name": "ItalyPowerDemand",
+    "m": 10,
+    "R": 3,
+    "classification_accuracy": 0.7677356656948494,
+    "forecasting_metrics": {
+      "rmse_per_class": [
+        0.5339758979627326,
+        0.6686418108222127
+      ],
+      "average_rmse": 0.6013088543924727,
+      "train_time": 231.43225765228271
+    },
+    "train_time": 229.09271597862244
+  }
+]
